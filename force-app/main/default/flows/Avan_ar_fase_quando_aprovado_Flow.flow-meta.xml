@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Avan_a_fase</name>
+        <label>Avança fase</label>
+        <locationX>774</locationX>
+        <locationY>603</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.StatusCadastro__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Finalizado</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.StatusIntegracao__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pendente</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Aprovado_na_analise_de_cr_dito</name>
+        <label>Aprovado na analise de crédito</label>
+        <locationX>769</locationX>
+        <locationY>392</locationY>
+        <defaultConnectorLabel>Resultado padrão</defaultConnectorLabel>
+        <rules>
+            <name>Sim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SituacaoAprovacao__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aprovado</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SituacaoAprovacao__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Avan_a_fase</targetReference>
+            </connector>
+            <label>Sim</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Avançar fase quando aprovador {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Avançar fase quando aprovado</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Aprovado_na_analise_de_cr_dito</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

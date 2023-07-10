@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Consultar dados API do Sintegra</masterLabel><targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="receitaRederalRequest" type="Boolean" default="false" label="API da Receita Federal" />
+            <property name="sintegraRequest" type="Boolean" default="false" label="API do Sintegra" />
+            <property name="simplesNacionalRequest" type="Boolean" default="false" label="API Simples Nacional" />
+            <property name="suframaRequest" type="Boolean" default="false" label="API do Suframa" />
+            <property name="showBalance" type="Boolean" default="false" label="Exibir saldo?" />
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Id do registro"/>
+            <property name="receitaRederalRequest" type="Boolean" default="false" label="API da Receita Federal" />
+            <property name="sintegraRequest" type="Boolean" default="false" label="API do Sintegra" />
+            <property name="simplesNacionalRequest" type="Boolean" default="false" label="API Simples Nacional" />
+            <property name="suframaRequest" type="Boolean" default="false" label="API do Suframa" />
+            <property name="showBalance" type="Boolean" default="false" label="Exibir saldo?" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Realizar consulta no sintegra" icon-name="standard:record_signature_task">
+        <lightning-spinner if:true={loading} alternative-text="Carregando..."></lightning-spinner>
+        <lightning-tabset>
+            <lightning-tab label="Método de consulta" value="request-method-tab">
+                <div class="slds-p-around--medium container-tab-content">
+                    <lightning-layout horizontal-align="space" vertical-align="end" class="slds-m-bottom--small"
+                        if:true={showBalance}>
+                        <lightning-layout-item size="10">
+                            <lightning-input data-name="sintegra-balance-input" type="number" disabled
+                                label="Quantidade de Consultas" value={balanceValue}
+                                formatter="number"></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1"
+                            class="slds-grid slds-grid--align-center slds-grid--vertical-align-end">
+                            <lightning-button-icon icon-name="utility:money" disabled={loadingBalance}
+                                title="Atualizar Quantidade de Consulta"
+                                onclick={handleClickReloadBalance}></lightning-button-icon>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1px"
+                            class="slds-grid slds-grid--align-center slds-grid--vertical-align-end">
+                            <a href="https://www.sintegraws.com.br/pagamento/pagamento.php"
+                                target="_blank"><lightning-button-icon icon-name="utility:payment_gateway"
+                                    disabled={loadingBalance} title="Portal recarga"></lightning-button-icon></a>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-combobox data-name="sintegra-option-combobox" label="Selecione o serviço a ser utilizado"
+                        onchange={handleChangeSintegraOption} options={sintegraOptions} value={sintegraOptionValue}
+                        required disabled={loading}
+                        message-when-value-missing="Por favor, selecione o serviço a ser utilizado"></lightning-combobox>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Registro da conta" value="account-record-tab">
+                <div class="slds-p-around--medium container-tab-content">
+                    <lightning-record-form object-api-name="Account" record-id={recordId} fields={accountFields}
+                        density="comfy" mode="readonly" columns="2" if:true={showAccountForm}></lightning-record-form>
+                    <p if:false={showAccountForm} class="slds-size--1-of-1 slds-text-align--center">Para visualizar os
+                        campos da integração, selecione um serviço de consulta.</p>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+        <lightning-layout horizontal-align="end" slot="footer">
+            <lightning-button-group>
+                <lightning-button label="Realizar consulta" onclick={handleClickToConsultSintegra} disabled={loading}
+                    icon-name="utility:contact_request"></lightning-button>
+            </lightning-button-group>
+        </lightning-layout>
+    </lightning-card>
+</template>

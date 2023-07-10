@@ -1,0 +1,186 @@
+<apex:page docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false"  standardController="NotaFiscal__c" extensions="ControllerVisualizarDANFE">
+    <html>
+        <head>
+            <style>
+                @page{
+                size: 29.5cm 21.0cm;
+                margin-top: 0px !important;
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+                margin-bottom: -8px !important;
+                padding: 1cm !important;
+                }
+                
+                .pagenumber:before {
+                content: counter(page);
+                color: #660000;
+                font-size: 13px;
+                margin-right: 10px;
+                }
+                
+                .pagecount:before {
+                content: counter(pages);
+                }
+                
+                html, body {
+                width: 100% !important;
+                height: 21.0cm !important;
+                margin: 0px !important;
+                font-family: sans-serif !important;
+                color: #1c1c1c;
+                }
+                
+                img {
+                max-width: 100%;
+                }
+                
+                a {
+                color: #1c1c1c;
+                }
+                
+                .medium {
+                font-weight: 500;
+                }
+                
+                .bold {
+                font-weight: 600;
+                }
+                
+                .bolder {
+                font-weight: 800;
+                }
+                
+                .black {
+                font-weight: 900;
+                }
+                
+                .text-left {
+                text-align: left;
+                }
+                
+                .text-center {
+                text-align: center;
+                }
+                
+                .text-right {
+                text-align: right;
+                }
+                
+                .uppercase {
+                text-transform: uppercase;
+                }
+                
+                table {
+                border-collapse: collapse;
+                width: 100%;
+                padding: 0;
+                }
+                
+                table tr.header > td {
+                height: 0cm;
+                }
+                
+                table tr.footer > td {
+                height: 0cm;
+                }
+                
+                table tr.content > td {
+                height: 19.0cm;
+                padding: 0cm;
+                }
+                
+                body > table td {
+                vertical-align: top;
+                }
+                
+                table.opportunity-table .fornecedores img {
+                position: absolute;
+                top: 0;
+                right: 15px;
+                margin-top: -30px;
+                }
+                
+                table.requisitante tr:nth-child(even) {
+                color: red;
+                }
+                
+                table tr.content th {
+                color: #fff;
+                }
+                
+                table.products-table th, table.products-table td {
+                vertical-align: middle;
+                }
+                
+                table.products-table tr.red th {
+                padding: 10px;
+                }
+                
+                table.products-table tr.gray th {
+                padding: 5px 10px;
+                font-size: 12px;
+                }
+                
+                table.products-table tr.repeater td {
+                padding: 5px 10px;
+                font-size: 12px;
+                border-bottom: 1px solid #c1c1c1;
+                }
+                
+                table.condicoes > tr > th, table.condicoes > tr > td {
+                padding: 8px;
+                font-size: 14px;
+                }
+                
+                table.condicoes > tr > td {
+                border-bottom: 1px solid #cdcdcd;
+                }
+            </style>
+        </head>
+        <body>
+            <button id="clickButton"  type="button"  onclick="openFile('{!base64}')"
+                                                >Clique para abrir o DANFE</button>
+            <div id="message">
+                
+            </div>
+        </body>
+        
+        <script>
+        function openFile(dataConverted){
+            let data = dataConverted
+            const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+                const byteCharacters = atob(b64Data);
+                const byteArrays = [];
+                for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                const slice = byteCharacters.slice(offset, offset + sliceSize);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        const blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+        }
+        const contentType = 'application/pdf';
+        const blob = b64toBlob(data, contentType);
+        const blobUrl = URL.createObjectURL(blob)
+        window.open(blobUrl, '_blank')
+        
+        }
+        
+        
+        window.onload = function(){
+            let base64 = '{!base64}'
+            if(base64){
+                var button = document.getElementById('clickButton');
+                button.click();
+            }else{
+                document.getElementById("clickButton").disabled = true;
+                document.getElementById('message').innerHTML = '<p>A integração de buscar DANFE do ERP da nota fiscal ainda não aconteceu.</p>';
+			}
+        }
+        </script>
+    </html>
+</apex:page>
