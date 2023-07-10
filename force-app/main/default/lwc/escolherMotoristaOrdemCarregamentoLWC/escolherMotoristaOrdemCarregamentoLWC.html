@@ -1,0 +1,44 @@
+<template>
+        <div>
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title slds-hyphenate">Vincular transporte</h2>
+                </header>
+                <div style="height: 44rem;padding: 45px;">
+                        <lightning-card>
+                                <lightning-combobox
+                                        name="typeTruck"
+                                        label="Veículo"
+                                        value={typeTruck}
+                                        options={options}
+                                        onchange={handleChange} ></lightning-combobox>
+                        </lightning-card>
+                        <lightning-card>
+                                <lightning-combobox
+                                        name="driver"
+                                        label="Motorista"
+                                        value={driver}
+                                        options={optionsDriver}
+                                        onchange={handleChangeDriver} ></lightning-combobox>
+                        </lightning-card>
+                        <lightning-card>
+                                <lightning-combobox
+                                        name="praca"
+                                        label="Praça"
+                                        value={praca}
+                                        options={optionsPraca}
+                                        onchange={handleChangePraca} ></lightning-combobox>
+                        </lightning-card>
+                </div>
+
+                <lightning-card>
+                        <div slot="footer" class="slds-grid s" style="float: right;padding: 7px;">
+                                <lightning-button variant="brand" label="Fechar"   class="slds-float_right" onclick={closeQuickAction} style="margin-right: 20px;"></lightning-button>
+                                <lightning-button variant="brand" label="Concluir"   class="slds-float_right" onclick={handleConclude}></lightning-button>
+                        </div>
+                </lightning-card>
+                <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+        </div>
+
+</template>

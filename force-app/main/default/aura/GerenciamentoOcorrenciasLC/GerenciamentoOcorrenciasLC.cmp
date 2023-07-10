@@ -1,0 +1,92 @@
+<!--
+ - Created by hellenmartins on 17/11/2021.
+ -->
+
+<aura:component description="GerenciamentoOcorrenciasLC"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+                controller="GerenciamentoOcorrenciaController"
+                access="global">
+    <aura:attribute name="ordemOportunidadeList" type="List" default="[]"/>
+    <aura:attribute name="ordemOportunidadeComOccorrenciaList" type="List" default="[]"/>
+    <aura:attribute name="columns" type="List" default="[]"/>
+    <aura:attribute name="columnsOcorrencia" type="List" default="[]"/>
+    <aura:attribute name="pickListValues" type="Object"/>
+    <aura:attribute name="ocorrencias" type="List"/>
+    <aura:attribute name="detalhes" type="List"/>
+    <aura:attribute name="disabled" type="Boolean" default="true"/>
+    <aura:attribute name="displaySpinner" type="Boolean" default="false"/>
+    <aura:attribute name="valueOcorrencia" type="String"/>
+    <aura:attribute name="valueDetalhes" type="String"/>
+    <aura:attribute name="justificativa" type="String"/>
+
+    <aura:html tag="style">
+        .slds-modal__container{
+        width: 90%; max-width: 90rem;
+        }
+    </aura:html>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <lightning:tabset selectedTabId="one">
+        <lightning:tab label="Gerar Ocorrência" id="one">
+            <h3>Selecione as oportunidades com ocorrência</h3>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto" padding="around-small">
+                    <lightning:datatable
+                            aura:id="table-ordem-opp"
+                            keyField="Id"
+                            showRowNumberColumn="true"
+                            hideCheckboxColumn="false"
+                            columns="{! v.columns }"
+                            data="{! v.ordemOportunidadeList }"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto" padding="around-small">
+                    <lightning:combobox name="ocorrenia" label="Ocorrência" value="{! v.valueOcorrencia }"
+                                        options="{! v.ocorrencias }" onchange="{! c.handleChange }"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" padding="around-small">
+                    <lightning:combobox name="progress" label="Detalhes Ocorrência" value="{! v.valueDetalhes }"
+                                        options="{! v.detalhes }" disabled="{! v.disabled}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto" padding="around-small">
+                    <lightning:textarea name="justificativa" value="{!v.justificativa}" label="Justificativa"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem padding="around-small" alignmentBump="left">
+                    <lightning:button variant="brand" label="Gerar Ocorrência" title="Gerar Ocorrência" onclick="{! c.saveOccurrence }"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <aura:if isTrue="{!v.displaySpinner}">
+                <lightning:spinner alternativeText="Loading" size="small" />
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="Status das Ocorrências" id="two">
+            <h3>Selecione os registros para gerenciar os status das ocorrências</h3>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto" padding="around-small">
+                    <lightning:datatable
+                            aura:id="concluir-ocorrencia"
+                            keyField="Id"
+                            showRowNumberColumn="true"
+                            hideCheckboxColumn="false"
+                            columns="{! v.columnsOcorrencia }"
+                            data="{! v.ordemOportunidadeComOccorrenciaList }"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem padding="around-small" alignmentBump="left">
+                    <lightning:button variant="brand" label="Marcar Status Em Andamento" title="Marcar Status Em Andamento" onclick="{! c.emAndamentoOccurrence }"/>
+                    <lightning:button variant="brand" label="Marcar Status como Concluído" title="Marcar Status como Concluído" onclick="{! c.concludeOccurrence }"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+
+        </lightning:tab>
+    </lightning:tabset>
+
+
+
+</aura:component>

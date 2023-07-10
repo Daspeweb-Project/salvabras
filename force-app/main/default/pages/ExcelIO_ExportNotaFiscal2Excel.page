@@ -1,0 +1,3 @@
+<apex:page standardController="NotaFiscal__c" recordSetVar="c" lightningStylesheets="true">
+ <!--   <ecio:ExportListView2Excel relatels="{!relatelist}" objlabel="{!labelJson}" field="{!fieldJson}" obj="{!objJson}" columns="{!objColumns}" fName="{!fileName}" type="{!objType}" errMessage="{!errorMsg}" exportObject="NotaFiscal__c" listview="{!islistview}" outputErrorMsg="{!outputErrorMsg}" /> !-->
+</apex:page>

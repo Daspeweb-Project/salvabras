@@ -1,0 +1,17 @@
+<template>
+    <lightning-card>
+        <div style="width: 100%;padding-left: 8rem;">
+            <span style="font-size: 1rem; width: 50%">Buscando as notas, aguarde ...</span>
+            <div style="width: 50%">
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+    
+        </div>
+        <lightning-progress-indicator current-step={orderCount}>
+            <template for:each={orders} for:item="order">
+                <lightning-progress-step label={order.Name} value={order.Id} key={order.Id}> </lightning-progress-step>
+            </template>
+        </lightning-progress-indicator>
+    </lightning-card>
+   
+</template>

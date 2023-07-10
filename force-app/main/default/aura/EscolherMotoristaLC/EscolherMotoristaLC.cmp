@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens"
+access="global">
+    <c:escolherMotoristaOrdemCarregamentoLWC recordId="{! v.recordId}"></c:escolherMotoristaOrdemCarregamentoLWC>
+
+</aura:component>

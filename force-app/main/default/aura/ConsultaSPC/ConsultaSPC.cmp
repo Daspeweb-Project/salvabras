@@ -1,0 +1,59 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasrecordid,forceCommunity:availableForAllPageTypes" controller="SPC"
+                access="global">
+    <aura:attribute name="record" type="Account" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="isNotVisiblePickList" type="boolean" default="false" />
+    <aura:attribute name="value" type="String" default="" />
+    <aura:attribute name="isLoading" type="boolean" default="false" />
+    <aura:attribute name="documento" type="String" />
+    <aura:attribute name="msgValidation" type="String" />
+    
+    <aura:attribute name="sucess" type="boolean" default="false" />
+    <aura:attribute name="isErrorValidation" type="boolean" default="false" />
+    <aura:attribute name="optionsProducts" type="List" default="[]" />
+    <aura:attribute name="messagemSucceOrError" type="String" />
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" targetFields="{!v.record}"
+                      fields="Id,Documento__c" recordUpdated="{!c.init}" />
+    <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+        <div class="slds-size_2-of-2">
+            <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                <p class="slds-line-clamp_small">Consulta SPC:</p>
+                <aura:if isTrue="{!v.isLoading}">
+                    <ui:message title="realizando a consulta" severity="info" closable="true">
+                        Aguarde o processo...
+                    </ui:message>
+                </aura:if>
+                <p><strong>{!v.messagemSucceOrError}</strong></p>
+            </div>
+            
+            <div class="slds-form-element__control">
+                <label class="slds-form-element__label" for="text-input-destinatario"><b>Selecione o produto desejado:
+                    </b></label>
+                <aura:if isTrue="{!v.isNotVisiblePickList}"><lightning:combobox onchange="{! c.handleChange }" autocomplete="off" name="SelecionemodeloEmail"
+                                                                             options="{! v.optionsProducts }" value="{! v.value }" type="List" /></aura:if>
+                <aura:if isTrue="{!!v.isNotVisiblePickList}">
+                    <ui:message title="Buscando a lista de produtos" severity="info" closable="true">
+                        Aguarde o processo...
+                    </ui:message>
+                </aura:if>
+            </div>
+            
+            <div class="slds-form-element__control">
+                        <lightning:input name="documento" disabled="true" value="{!v.documento}" label="Documento à ser consultado:" />
+
+            </div>
+            
+            <aura:if isTrue="{!v.isErrorValidation}">
+                <ui:message title="Informação" severity="error" closable="true">
+                    {!v.msgValidation}
+                </ui:message>    
+            </aura:if>
+            
+            <aura:if isTrue="{!!v.isLoading}">
+            <div class=" slds-text-align_center slds-m-around_x-small">
+                    <lightning:button variant="brand"> <span class="slds-line-clamp_small " onclick="{! c.consultaSPC }">Consultar</span></lightning:button>
+            </div>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>
